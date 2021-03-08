@@ -31,8 +31,9 @@ const operand = document.querySelectorAll("[data-operand]");
 const allClear = document.querySelector("[data-all-clear]");
 const clear = document.querySelector("[data-clear]");
 const equals = document.querySelector("[data-equals]");
-const currentOperand = document.querySelector(".calc__current")
-const previousOperand = document.querySelector(".calc__previous")
+const currentOperand = document.querySelector(".calc__current");
+const previousOperand = document.querySelector(".calc__previous");
+const decimal = document.querySelector(".decimal");
 
 let firstValue;
 let secondValue;
@@ -60,9 +61,15 @@ operand.forEach(btn => {
             operatorType = btn.textContent;
             previousOperand.textContent = `${firstValue} ${operatorType}`
             currentOperand.textContent = 0;
+            decimal.disabled = false;
         } else {
             secondValue = currentOperand.textContent;
-            currentOperand.textContent = operate(operatorType, firstValue, secondValue);
+            result = operate(operatorType, parseFloat(firstValue), parseFloat(secondValue))
+            currentOperand.textContent = result;
+            previousOperand.textContent = `${firstValue} ${operatorType} ${secondValue} =`
+            firstValue = result;
+            operatorType = btn.textContent;
+            decimal.disabled = false;
         }
     })
 })
@@ -85,10 +92,22 @@ allClear.addEventListener("click", e => {
 
 equals.addEventListener("click", e => {
     secondValue = currentOperand.textContent;
+    if (!secondValue || secondValue == "0") {
+        return;
+    }
     result = operate(operatorType, parseFloat(firstValue), parseFloat(secondValue))
-    currentOperand.textContent = result;
+    if (Number.isInteger(result)) {
+        currentOperand.textContent = result;
+    } else {
+        currentOperand.textContent = result.toPrecision(3);
+    }
     previousOperand.textContent = `${firstValue} ${operatorType} ${secondValue} =`
     firstValue;
     secondValue;
     operatorType = "";
+    decimal.disabled = false;
+})
+
+decimal.addEventListener("click", e => {
+    decimal.disabled = true;
 })
