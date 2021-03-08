@@ -15,5 +15,5 @@ for the countless hours I spent on freeCodeCamp or on Youtube. But I know that
 if I just take a moment and read instructions, no challenge is challenging.
 
 My approach for the calculator may not be cleanest or the most optimal, but 
-it is my approach and it thought me a lot on the way. I'm glad I didn't 
+it is my approach and it tought me a lot on the way. I'm glad I didn't 
 follow any tutorials or guides.
